@@ -16,7 +16,7 @@ const { listenerCount } = require("process");
 
 function init() {
   const members = [];
-  const manager = [
+  const managerQuestions = [
     {
       type: "input",
       name: "name",
@@ -38,7 +38,7 @@ function init() {
       message: "What is the employee's office number?",
     },
   ];
-  const engineer = [
+  const engineerQuestions = [
     {
       type: "input",
       name: "name",
@@ -60,7 +60,7 @@ function init() {
       message: "What is the employee's GitHub name?",
     },
   ];
-  const intern = [
+  const internQuestions = [
     {
       type: "input",
       name: "name",
@@ -84,8 +84,8 @@ function init() {
   ];
 
   function manager() {
-    inquirer.prompt(manager).then((answers) => {
-      const manager = new Manager(
+    inquirer.prompt(managerQuestions).then((answers) => {
+      const managerQuestions = new Manager(
         answers.name,
         answers.id,
         answers.email,
@@ -102,8 +102,8 @@ function init() {
         {
           type: "list",
           name: "choices",
-          message: "Do you want to build the team?",
-          choices: ["Engineer", "Intern", "None, Build Team"],
+          message: "Would you like to add another member to the team?",
+          choices: ["Engineer", "Intern", "No, Build Team"],
         },
       ])
       .then((answers) => {
@@ -118,27 +118,27 @@ function init() {
   }
 
   function engineer() {
-    inquirer.prompt(engineer).then((answers) => {
-      const engineer = new Engineer(
+    inquirer.prompt(engineerQuestions).then((answers) => {
+      const engineerQuestions = new Engineer(
         answers.name,
         answers.id,
         answers.email,
         answers.gitHub
       );
-      members.push(manager);
+      members.push(engineer);
       generateTeam();
     });
   }
 
   function intern() {
-    inquirer.prompt(intern).then((answers) => {
-      const intern = new Intern(
+    inquirer.prompt(internQuestions).then((answers) => {
+      const internQuestions = new Intern(
         answers.name,
         answers.id,
         answers.email,
         answers.school
       );
-      members.push(manager);
+      members.push(intern);
       generateTeam();
     });
   }
@@ -164,7 +164,7 @@ init();
 // Hint: you may need to check if the `output` folder exists and create it if it
 // does not.
 
-// HINT: each employee type (manager, engineer, or intern) has slightly different
+// HINT: each employee type (managerQuestions, engineer, or intern) has slightly different
 // information; write your code to ask different questions via inquirer depending on
 // employee type.
 
