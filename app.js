@@ -9,9 +9,149 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
-
+const { inherits } = require("util");
+const { listenerCount } = require("process");
 
 // Write code to use inquirer to gather information about the development team members,
+
+function init() {
+  const members = [];
+  const manager = [
+    {
+      type: "input",
+      name: "name",
+      message: "What is the employee's name?",
+    },
+    {
+      type: "input",
+      name: "id",
+      message: "What is the employee's ID?",
+    },
+    {
+      type: "input",
+      name: "email",
+      message: "What is the employee's email address",
+    },
+    {
+      type: "input",
+      name: "office",
+      message: "What is the employee's office number?",
+    },
+  ];
+  const engineer = [
+    {
+      type: "input",
+      name: "name",
+      message: "What is the employee's name?",
+    },
+    {
+      type: "input",
+      name: "id",
+      message: "What is the employee's ID?",
+    },
+    {
+      type: "input",
+      name: "email",
+      message: "What is the employee's email address",
+    },
+    {
+      type: "input",
+      name: "gitHub",
+      message: "What is the employee's GitHub name?",
+    },
+  ];
+  const intern = [
+    {
+      type: "input",
+      name: "name",
+      message: "What is the employee's name?",
+    },
+    {
+      type: "input",
+      name: "id",
+      message: "What is the employee's ID?",
+    },
+    {
+      type: "input",
+      name: "email",
+      message: "What is the employee's email address",
+    },
+    {
+      type: "input",
+      name: "school",
+      message: "Where did the employee go to school?",
+    },
+  ];
+
+  function manager() {
+    inquirer.prompt(manager).then((answers) => {
+      const manager = new Manager(
+        answers.name,
+        answers.id,
+        answers.email,
+        answers.office
+      );
+      members.push(manager);
+      generateTeam();
+    });
+  }
+
+  function generateTeam() {
+    inquirer
+      .prompt([
+        {
+          type: "list",
+          name: "choices",
+          message: "Do you want to build the team?",
+          choices: ["Engineer", "Intern", "None, Build Team"],
+        },
+      ])
+      .then((answers) => {
+        if (answers.choices === "Engineer") {
+          engineer();
+        } else if (answers.choices === "Intern") {
+          intern();
+        } else {
+          buildTeam();
+        }
+      });
+  }
+
+  function engineer() {
+    inquirer.prompt(engineer).then((answers) => {
+      const engineer = new Engineer(
+        answers.name,
+        answers.id,
+        answers.email,
+        answers.gitHub
+      );
+      members.push(manager);
+      generateTeam();
+    });
+  }
+
+  function intern() {
+    inquirer.prompt(intern).then((answers) => {
+      const intern = new Intern(
+        answers.name,
+        answers.id,
+        answers.email,
+        answers.school
+      );
+      members.push(manager);
+      generateTeam();
+    });
+  }
+
+  function buildTeam() {
+    fs.writeFileSync(outputPath, render(members), "utf-8");
+  }
+
+  manager();
+}
+
+init();
+
 // and to create objects for each team member (using the correct classes as blueprints!)
 
 // After the user has input all employees desired, call the `render` function (required
