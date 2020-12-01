@@ -30,11 +30,11 @@ function init() {
     {
       type: "input",
       name: "email",
-      message: "What is the employee's email address",
+      message: "What is the employee's email address?",
     },
     {
       type: "input",
-      name: "office",
+      name: "officeNumber",
       message: "What is the employee's office number?",
     },
   ];
@@ -52,7 +52,7 @@ function init() {
     {
       type: "input",
       name: "email",
-      message: "What is the employee's email address",
+      message: "What is the employee's email address?",
     },
     {
       type: "input",
@@ -74,7 +74,7 @@ function init() {
     {
       type: "input",
       name: "email",
-      message: "What is the employee's email address",
+      message: "What is the employee's email address?",
     },
     {
       type: "input",
@@ -89,7 +89,7 @@ function init() {
         answers.name,
         answers.id,
         answers.email,
-        answers.office
+        answers.officeNumber
       );
       members.push(manager);
       generateTeam();
