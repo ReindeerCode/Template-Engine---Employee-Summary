@@ -12,142 +12,80 @@ const render = require("./lib/htmlRenderer");
 const { inherits } = require("util");
 const { listenerCount } = require("process");
 
+const questions = require("./questions");
+
+const members = [];
+
 // Write code to use inquirer to gather information about the development team members,
 
+function manager() {
+  inquirer.prompt(questions.managerQuestions).then((answers) => {
+    const managerQuestions = new Manager(
+      answers.name,
+      answers.id,
+      answers.email,
+      answers.officeNumber
+    );
+    members.push(managerQuestions);
+    generateTeam();
+  });
+}
+
+function engineer() {
+  inquirer.prompt(questions.engineerQuestions).then((answers) => {
+    const engineerQuestions = new Engineer(
+      answers.name,
+      answers.id,
+      answers.email,
+      answers.github
+    );
+    console.log(engineerQuestions);
+    members.push(engineerQuestions);
+    generateTeam();
+  });
+}
+
+function intern() {
+  inquirer.prompt(questions.internQuestions).then((answers) => {
+    const internQuestions = new Intern(
+      answers.name,
+      answers.id,
+      answers.email,
+      answers.school
+    );
+    members.push(internQuestions);
+    generateTeam();
+  });
+}
+
+function buildTeam() {
+  console.log(JSON.stringify(members));
+  fs.writeFileSync(outputPath, render(members), "utf-8");
+}
+
+function generateTeam() {
+  inquirer
+    .prompt([
+      {
+        type: "list",
+        name: "choices",
+        message: "Would you like to add another member to the team?",
+        choices: ["Engineer", "Intern", "No, Build Team"],
+      },
+    ])
+    .then((answers) => {
+      if (answers.choices === "Engineer") {
+        engineer();
+      } else if (answers.choices === "Intern") {
+        intern();
+      } else {
+        buildTeam();
+      }
+    });
+}
+
 function init() {
-  const members = [];
-  const managerQuestions = [
-    {
-      type: "input",
-      name: "name",
-      message: "What is the employee's name?",
-    },
-    {
-      type: "input",
-      name: "id",
-      message: "What is the employee's ID?",
-    },
-    {
-      type: "input",
-      name: "email",
-      message: "What is the employee's email address?",
-    },
-    {
-      type: "input",
-      name: "officeNumber",
-      message: "What is the employee's office number?",
-    },
-  ];
-  const engineerQuestions = [
-    {
-      type: "input",
-      name: "name",
-      message: "What is the employee's name?",
-    },
-    {
-      type: "input",
-      name: "id",
-      message: "What is the employee's ID?",
-    },
-    {
-      type: "input",
-      name: "email",
-      message: "What is the employee's email address?",
-    },
-    {
-      type: "input",
-      name: "github",
-      message: "What is the employee's GitHub name?",
-    },
-  ];
-  const internQuestions = [
-    {
-      type: "input",
-      name: "name",
-      message: "What is the employee's name?",
-    },
-    {
-      type: "input",
-      name: "id",
-      message: "What is the employee's ID?",
-    },
-    {
-      type: "input",
-      name: "email",
-      message: "What is the employee's email address?",
-    },
-    {
-      type: "input",
-      name: "school",
-      message: "Where did the employee go to school?",
-    },
-  ];
-
-  function manager() {
-    inquirer.prompt(managerQuestions).then((answers) => {
-      const managerQuestions = new Manager(
-        answers.name,
-        answers.id,
-        answers.email,
-        answers.officeNumber
-      );
-      members.push(manager);
-      generateTeam();
-    });
-  }
-
-  function generateTeam() {
-    inquirer
-      .prompt([
-        {
-          type: "list",
-          name: "choices",
-          message: "Would you like to add another member to the team?",
-          choices: ["Engineer", "Intern", "No, Build Team"],
-        },
-      ])
-      .then((answers) => {
-        if (answers.choices === "Engineer") {
-          engineer();
-        } else if (answers.choices === "Intern") {
-          intern();
-        } else {
-          buildTeam();
-        }
-      });
-  }
-
-  function engineer() {
-    inquirer.prompt(engineerQuestions).then((answers) => {
-      const engineerQuestions = new Engineer(
-        answers.name,
-        answers.id,
-        answers.email,
-        answers.github
-      );
-      members.push(engineer);
-      generateTeam();
-    });
-  }
-
-  function intern() {
-    inquirer.prompt(internQuestions).then((answers) => {
-      const internQuestions = new Intern(
-        answers.name,
-        answers.id,
-        answers.email,
-        answers.school
-      );
-      members.push(intern);
-      generateTeam();
-    });
-  }
-
-  function buildTeam() {
-    fs.writeFileSync(outputPath, render(members), "utf-8");
-  }
-
-  manager();
+  generateTeam();
 }
 
 init();
