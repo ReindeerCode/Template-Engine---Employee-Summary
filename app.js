@@ -56,7 +56,7 @@ function init() {
     },
     {
       type: "input",
-      name: "gitHub",
+      name: "github",
       message: "What is the employee's GitHub name?",
     },
   ];
@@ -123,7 +123,7 @@ function init() {
         answers.name,
         answers.id,
         answers.email,
-        answers.gitHub
+        answers.github
       );
       members.push(engineer);
       generateTeam();
