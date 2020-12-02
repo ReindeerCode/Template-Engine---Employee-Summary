@@ -1,5 +1,5 @@
 # Project:
-<h2> Template Engine - Employee Summary </h2>
+<strong>Template Engine - Employee Summary</strong>
 
 Deployable Link - > Not available as this is a Node.js Project. The repo link is https://github.com/ReindeerCode/Template-Engine---Employee-Summary
 
