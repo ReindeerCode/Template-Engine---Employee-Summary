@@ -9,14 +9,10 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
-const { inherits } = require("util");
-const { listenerCount } = require("process");
 
 const questions = require("./questions");
 
 const members = [];
-
-// Write code to use inquirer to gather information about the development team members,
 
 function manager() {
   inquirer.prompt(questions.managerQuestions).then((answers) => {
@@ -26,6 +22,7 @@ function manager() {
       answers.email,
       answers.officeNumber
     );
+
     members.push(managerQuestions);
     generateTeam();
   });
@@ -67,14 +64,12 @@ function generateTeam() {
       {
         type: "list",
         name: "choices",
-        message: "Would you like to add a member to the team?",
-        choices: ["Manager", "Engineer", "Intern", "No, Build Team"],
+        message: "Would you like to add another member to the team?",
+        choices: ["Engineer", "Intern", "No, Build Team"],
       },
     ])
     .then((answers) => {
-      if (answers.choices === "Manager") {
-        manager();
-      } else if (answers.choices === "Intern") {
+      if (answers.choices === "Intern") {
         intern();
       } else if (answers.choices === "Engineer") {
         engineer();
@@ -84,8 +79,4 @@ function generateTeam() {
     });
 }
 
-function init() {
-  generateTeam();
-}
-
-init();
+manager();
