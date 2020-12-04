@@ -26,7 +26,7 @@ One of the most important aspects of programming is writing code that is readabl
 ## Images:
 ![Project Screenshot](./Assets/tests.jpg)
 
-![Project Screenshot](./Assets/newTeamOutput.jpg)
+![Project Screenshot](./Assets/NewTeamOutput.jpg)
 
 ## Installation Instructions: 
 1) Install dependencies - The dependencies are, [jest](https://jestjs.io/) for running the provided tests, and [inquirer](https://www.npmjs.com/package/inquirer) for collecting input from the user. 
